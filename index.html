@@ -173,7 +173,7 @@
     <section id="skills" class="py-20 relative">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16 fade-in-3d">
-                <h2 class="text-5xl font-bold text-glow bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-4">Skills & Technologies</h2>
+                <h2 class="text-5xl font-bold text-glow bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-4" data-i18n="skills_title">Skills & Technologies</h2>
                 <div class="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto"></div>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -181,7 +181,7 @@
                     <div class="skill-orb mx-auto mb-6">
                         <i class="fas fa-code text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center">Programming Languages</h3>
+                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center" data-i18n="skills_programming">Programming Languages</h3>
                     <div class="flex flex-wrap gap-2 justify-center">
                         <span class="glass-effect text-cyan-300 px-3 py-1 rounded-full text-sm font-medium neon-border">Python</span>
                         <span class="glass-effect text-yellow-300 px-3 py-1 rounded-full text-sm font-medium neon-border">JavaScript</span>
@@ -192,7 +192,7 @@
                     <div class="skill-orb mx-auto mb-6">
                         <i class="fas fa-globe text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center">Web Development</h3>
+                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center" data-i18n="skills_web">Web Development</h3>
                     <div class="flex flex-wrap gap-2 justify-center">
                         <span class="glass-effect text-orange-300 px-3 py-1 rounded-full text-sm font-medium neon-border">HTML</span>
                         <span class="glass-effect text-blue-300 px-3 py-1 rounded-full text-sm font-medium neon-border">CSS</span>
@@ -203,7 +203,7 @@
                     <div class="skill-orb mx-auto mb-6">
                         <i class="fas fa-database text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center">Databases</h3>
+                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center" data-i18n="skills_db">Databases</h3>
                     <div class="flex flex-wrap gap-2 justify-center">
                         <span class="glass-effect text-blue-300 px-3 py-1 rounded-full text-sm font-medium neon-border">MySQL</span>
                         <span class="glass-effect text-red-300 px-3 py-1 rounded-full text-sm font-medium neon-border">Oracle</span>
@@ -213,7 +213,7 @@
                     <div class="skill-orb mx-auto mb-6">
                         <i class="fas fa-tools text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center">Tools & Systems</h3>
+                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center" data-i18n="skills_tools">Tools & Systems</h3>
                     <div class="flex flex-wrap gap-2 justify-center">
                         <span class="glass-effect text-orange-300 px-3 py-1 rounded-full text-sm font-medium neon-border">Ubuntu</span>
                         <span class="glass-effect text-blue-300 px-3 py-1 rounded-full text-sm font-medium neon-border">Draw.io</span>
@@ -223,7 +223,7 @@
                     <div class="skill-orb mx-auto mb-6">
                         <i class="fab fa-git-alt text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center">Version Control</h3>
+                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center" data-i18n="skills_vc">Version Control</h3>
                     <div class="flex flex-wrap gap-2 justify-center">
                         <span class="glass-effect text-gray-300 px-3 py-1 rounded-full text-sm font-medium neon-border">Git</span>
                     </div>
@@ -232,15 +232,15 @@
                     <div class="skill-orb mx-auto mb-6">
                         <i class="fas fa-language text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center">Languages</h3>
+                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center" data-i18n="skills_languages">Languages</h3>
                     <div class="space-y-2">
                         <div class="flex justify-between">
                             <span class="text-sm font-medium text-gray-300">Arabic, French, English</span>
-                            <span class="text-sm text-green-400 font-medium">Fluent</span>
+                            <span class="text-sm text-green-400 font-medium" data-i18n="skills_fluent">Fluent</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-sm font-medium text-gray-300">Chinese, Spanish</span>
-                            <span class="text-sm text-yellow-400 font-medium">Elementary</span>
+                            <span class="text-sm text-yellow-400 font-medium" data-i18n="skills_elementary">Elementary</span>
                         </div>
                     </div>
                 </div>
@@ -578,7 +578,7 @@
     </script>
 
     <!-- Language translation script -->
-    <script>
+     <script>
       const translations = {
         en: {
           title: "Mohamed Nouaim El Aakil - 3D Portfolio",
@@ -602,6 +602,15 @@
           location_label: "Location",
           github_label: "GitHub",
           linkedin_label: "LinkedIn",
+          skills_title: "Skills & Technologies",
+          skills_programming: "Programming Languages",
+          skills_web: "Web Development",
+          skills_db: "Databases",
+          skills_tools: "Tools & Systems",
+          skills_vc: "Version Control",
+          skills_languages: "Languages",
+          skills_fluent: "Fluent",
+          skills_elementary: "Elementary",
           contact_title: "Let's Work Together",
           contact_desc: "Ready to bring your ideas to life? Let's connect and create something amazing.",
           contact_email: "Send Email",
@@ -632,6 +641,15 @@
           location_label: "Localisation",
           github_label: "GitHub",
           linkedin_label: "LinkedIn",
+          skills_title: "Compétences & Technologies",
+          skills_programming: "Langages de Programmation",
+          skills_web: "Développement Web",
+          skills_db: "Bases de Données",
+          skills_tools: "Outils & Systèmes",
+          skills_vc: "Contrôle de Version",
+          skills_languages: "Langues",
+          skills_fluent: "Courant",
+          skills_elementary: "Élémentaire",
           contact_title: "Travaillons ensemble",
           contact_desc: "Prêt à donner vie à vos idées ? Contactons-nous et créons quelque chose d'incroyable.",
           contact_email: "Envoyer un Email",
@@ -645,12 +663,10 @@
         document.querySelectorAll('[data-i18n]').forEach(el => {
           const key = el.getAttribute('data-i18n');
           let value = translations[lang][key] || el.innerHTML;
-          // Allow html (for line breaks, etc.)
           if (el.tagName === "TITLE") { document.title = value.replace(/<[^>]*>?/gm, ''); }
           else el.innerHTML = value;
         });
       }
-      // Default: English
       document.addEventListener('DOMContentLoaded', () => setLanguage('en'));
     </script>
 </body>
