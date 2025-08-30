@@ -1,901 +1,737 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="title">Mohamed Nouaim El Aakil - 3D Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .lang-switch { position: fixed; top: 18px; right: 28px; z-index: 9999; }
-        /* Your original styles untouched below... */
-        .card-3d { transform-style: preserve-3d; transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1); perspective: 1000px; }
-        .card-3d:hover { transform: rotateY(10deg) rotateX(10deg) translateZ(20px); box-shadow: 0 30px 60px rgba(0,0,0,0.3);}
-        .floating { animation: float 6s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg);} 50% { transform: translateY(-20px) rotate(5deg);} }
-        .rotate-3d { animation: rotate3d 20s linear infinite; }
-        @keyframes rotate3d { 0% { transform: rotateX(0deg) rotateY(0deg);} 25% { transform: rotateX(90deg) rotateY(0deg);} 50% { transform: rotateX(90deg) rotateY(90deg);} 75% { transform: rotateX(0deg) rotateY(90deg);} 100% { transform: rotateX(0deg) rotateY(0deg);} }
-        .gradient-3d { background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); position: relative; }
-        .gradient-3d::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%); animation: shimmer 3s ease-in-out infinite;}
-        @keyframes shimmer { 0%, 100% { opacity: 0;} 50% { opacity: 1;} }
-        .skill-orb { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; transform-style: preserve-3d; transition: all 0.4s ease; background: linear-gradient(45deg, #667eea, #764ba2); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);}
-        .skill-orb:hover { transform: rotateY(180deg) scale(1.1); box-shadow: 0 20px 40px rgba(102, 126, 234, 0.5);}
-        .skill-orb::before { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; border-radius: 50%; background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4); z-index: -1; animation: rotate 4s linear infinite;}
-        @keyframes rotate { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
-        .pulse-glow { animation: pulse-glow 2s ease-in-out infinite alternate;}
-        @keyframes pulse-glow { from { box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); transform: scale(1);} to { box-shadow: 0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.4); transform: scale(1.05);} }
-        .bounce-icon { animation: bounce-icon 2s ease-in-out infinite; }
-        @keyframes bounce-icon { 0%, 20%, 50%, 80%, 100% { transform: translateY(0);} 40% { transform: translateY(-10px);} 60% { transform: translateY(-5px);} }
-        .project-card { position: relative; overflow: hidden; }
-        .project-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); transform: rotate(45deg); animation: shine 3s ease-in-out infinite;}
-        @keyframes shine { 0% { transform: translateX(-100%) translateY(-100%) rotate(45deg);} 50% { transform: translateX(100%) translateY(100%) rotate(45deg);} 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg);} }
-        .parallax-bg { background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover;}
-        .glass-effect { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2);}
-        .text-glow { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);}
-        .section-3d { transform-style: preserve-3d; perspective: 1000px;}
-        .fade-in-3d { opacity: 0; transform: translateZ(-100px) rotateX(90deg); transition: all 1s ease-out;}
-        .fade-in-3d.visible { opacity: 1; transform: translateZ(0) rotateX(0deg);}
-        .hologram { position: relative; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%); background-size: 200% 200%; animation: hologram-scan 3s ease-in-out infinite;}
-        @keyframes hologram-scan { 0%, 100% { background-position: 0% 0%;} 50% { background-position: 100% 100%;} }
-        .neon-border { border: 2px solid #00ffff; box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 15px #00ffff, inset 0 0 5px #00ffff; animation: neon-pulse 2s ease-in-out infinite alternate;}
-        @keyframes neon-pulse { from { box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 15px #00ffff, inset 0 0 5px #00ffff;} to { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff, inset 0 0 10px #00ffff;} }
-        .matrix-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%), radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%); animation: matrix-move 10s ease-in-out infinite;}
-        @keyframes matrix-move { 0%, 100% { transform: translateX(0) translateY(0);} 33% { transform: translateX(-30px) translateY(-30px);} 66% { transform: translateX(30px) translateY(-30px);} }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohamed Nouaim El Aakil - Software Engineer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    * { font-family: 'Inter', sans-serif; }
+    .gradient-bg { background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); }
+    .card-3d { transform: perspective(1000px) rotateX(0deg) rotateY(0deg); transition: all 0.3s ease; }
+    .card-3d:hover { transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateY(-10px); box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
+    .floating { animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+    .skill-badge { background: linear-gradient(45deg, #3b82f6, #1e40af); background-size: 200% 200%; animation: gradientShift 3s ease infinite; }
+    @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    .timeline-item { position: relative; padding-left: 2rem; }
+    .timeline-item::before { content: ''; position: absolute; left: 0; top: 0.5rem; width: 12px; height: 12px; background: linear-gradient(45deg, #3b82f6, #1e40af); border-radius: 50%; box-shadow: 0 0 0 4px white, 0 0 0 6px #e5e7eb; }
+    .timeline-item::after { content: ''; position: absolute; left: 5px; top: 1.5rem; width: 2px; height: calc(100% - 1rem); background: linear-gradient(to bottom, #3b82f6, #1e40af); }
+    .timeline-item:last-child::after { display: none; }
+    .btn-3d { transform: perspective(1000px) rotateX(0deg); transition: all 0.3s ease; }
+    .btn-3d:hover { transform: perspective(1000px) rotateX(-10deg) translateY(-2px); }
+    .profile-3d { transform: perspective(1000px) rotateY(0deg); transition: all 0.5s ease; }
+    .profile-3d:hover { transform: perspective(1000px) rotateY(15deg); }
+    .section-enter { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+    .section-enter.visible { opacity: 1; transform: translateY(0); }
+  </style>
 </head>
-<body class="bg-gray-900 text-white">
-
-    <!-- Language Switch -->
-    <div class="lang-switch">
-      <button onclick="setLanguage('en')" aria-label="English" style="font-size:22px;">🇬🇧</button>
-      <button onclick="setLanguage('fr')" aria-label="French" style="font-size:22px;">🇫🇷</button>
+<body class="bg-white text-gray-800">
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-4">
+        <div class="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+          Mohamed Nouaim
+        </div>
+        <div class="hidden md:flex space-x-8">
+          <a href="#home" class="hover:text-blue-600 transition-colors" data-en="Home" data-fr="Accueil">Home</a>
+          <a href="#about" class="hover:text-blue-600 transition-colors" data-en="About" data-fr="À propos">About</a>
+          <a href="#skills" class="hover:text-blue-600 transition-colors" data-en="Skills" data-fr="Compétences">Skills</a>
+          <a href="#projects" class="hover:text-blue-600 transition-colors" data-en="Projects" data-fr="Projets">Projects</a>
+          <a href="#experience" class="hover:text-blue-600 transition-colors" data-en="Experience" data-fr="Expérience">Experience</a>
+          <a href="#contact" class="hover:text-blue-600 transition-colors" data-en="Contact" data-fr="Contact">Contact</a>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="flex bg-gray-100 rounded-lg p-1">
+            <button id="lang-en" class="px-3 py-1 rounded-md text-sm font-medium transition-all bg-white text-blue-600 shadow-sm">EN</button>
+            <button id="lang-fr" class="px-3 py-1 rounded-md text-sm font-medium transition-all text-gray-600 hover:text-blue-600">FR</button>
+          </div>
+          <button class="btn-3d bg-gradient-to-r from-blue-600 to-blue-800 text-white px-4 py-2 rounded-lg hover:shadow-lg" data-en="Download CV" data-fr="Télécharger CV">
+            Download CV
+          </button>
+        </div>
+      </div>
     </div>
+  </nav>
 
-    <!-- 3D Navigation -->
-    <nav class="fixed top-0 w-full glass-effect z-50 transition-all duration-300">
-        <div class="max-w-6xl mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <div class="text-xl font-bold text-glow" data-i18n="nav_name">Mohamed Nouaim</div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="text-gray-300 hover:text-cyan-400 transition-all duration-300 hover:text-glow" data-i18n="nav_home">Home</a>
-                    <a href="#about" class="text-gray-300 hover:text-cyan-400 transition-all duration-300 hover:text-glow" data-i18n="nav_about">About</a>
-                    <a href="#skills" class="text-gray-300 hover:text-cyan-400 transition-all duration-300 hover:text-glow" data-i18n="nav_skills">Skills</a>
-                    <a href="#projects" class="text-gray-300 hover:text-cyan-400 transition-all duration-300 hover:text-glow" data-i18n="nav_projects">Projects</a>
-                    <a href="#experience" class="text-gray-300 hover:text-cyan-400 transition-all duration-300 hover:text-glow" data-i18n="nav_experience">Experience</a>
-                    <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition-all duration-300 hover:text-glow" data-i18n="nav_contact">Contact</a>
-                </div>
-                <button class="md:hidden text-gray-300" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-            </div>
+  <!-- Hero Section -->
+  <section id="home" class="min-h-screen flex items-center justify-center pt-20 px-4">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div class="section-enter">
+        <h1 class="text-5xl md:text-7xl font-bold mb-4">
+          <span class="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+            Mohamed Nouaim
+          </span>
+          <br>
+          <span class="text-gray-800">El Aakil</span>
+        </h1>
+        <h2 class="text-2xl md:text-3xl text-blue-600 font-semibold mb-6" data-en="Software Engineering" data-fr="Ingénierie Logicielle">Software Engineering</h2>
+        <p class="text-lg text-gray-600 mb-8 leading-relaxed" data-en="Motivated and dedicated software engineer with strong skills in programming, problem-solving, and teamwork. Experienced through internships and hands-on projects." data-fr="Ingénieur logiciel motivé et dévoué avec de solides compétences en programmation, résolution de problèmes et travail d'équipe. Expérimenté grâce à des stages et des projets pratiques.">
+          Motivated and dedicated software engineer with strong skills in programming, problem-solving, and teamwork. Experienced through internships and hands-on projects.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button class="btn-3d bg-gradient-to-r from-blue-600 to-blue-800 text-white px-8 py-4 rounded-lg font-semibold hover:shadow-xl transition-all" data-en="View Projects" data-fr="Voir les Projets">
+            <i class="fas fa-code mr-2"></i><span>View Projects</span>
+          </button>
+          <button class="btn-3d border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-all" data-en="Get In Touch" data-fr="Me Contacter">
+            <i class="fas fa-envelope mr-2"></i><span>Get In Touch</span>
+          </button>
         </div>
-    </nav>
-
-    <!-- 3D Hero Section -->
-    <section id="home" class="min-h-screen flex items-center relative overflow-hidden">
-        <div class="matrix-bg"></div>
-        <div class="max-w-6xl mx-auto px-6 py-20 relative z-10">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="fade-in-3d">
-                    <h1 class="text-6xl md:text-7xl font-bold mb-4 text-glow bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent" data-i18n="hero_title">
-                        Mohamed Nouaim<br>El Aakil
-                    </h1>
-                    <h2 class="text-3xl md:text-4xl font-light mb-6 text-cyan-300" data-i18n="hero_subtitle">Software Engineering</h2>
-                    <p class="text-lg mb-8 text-gray-300 leading-relaxed" data-i18n="hero_text">Motivated and dedicated software engineer with strong skills in programming, problem-solving, and teamwork. Experienced through internships and hands-on projects.</p>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="#contact" class="glass-effect neon-border px-8 py-3 rounded-full font-semibold hover:bg-cyan-400 hover:text-gray-900 transition-all duration-300" data-i18n="btn_contact">Get In Touch</a>
-                        <a href="#projects" class="border-2 border-purple-500 text-purple-400 px-8 py-3 rounded-full font-semibold hover:bg-purple-500 hover:text-white transition-all duration-300" data-i18n="btn_projects">View Projects</a>
-                    </div>
-                </div>
-                <div class="flex justify-center fade-in-3d">
-                    <div class="relative">
-                        <div class="w-80 h-80 rounded-full glass-effect neon-border flex items-center justify-center floating overflow-hidden">
-                            <img src="assets/profile.jpg" alt="Mohamed Nouaim El Aakil" class="w-64 h-64 rounded-full object-cover hologram border-4 border-white/20">
-                        </div>
-                        <div class="absolute -top-4 -right-4 w-24 h-24 bg-cyan-400 rounded-full opacity-60 floating" style="animation-delay: -2s;"></div>
-                        <div class="absolute -bottom-6 -left-6 w-16 h-16 bg-purple-400 rounded-full opacity-60 floating" style="animation-delay: -4s;"></div>
-                    </div>
-                </div>
+      </div>
+      <div class="section-enter flex justify-center">
+        <div class="profile-3d relative">
+          <div class="w-80 h-80 bg-gradient-to-br from-blue-100 to-white rounded-full flex items-center justify-center floating">
+            <div class="w-72 h-72 bg-gradient-to-br from-blue-200 to-blue-50 rounded-full flex items-center justify-center">
+              <i class="fas fa-user text-8xl text-blue-600"></i>
             </div>
+          </div>
+          <div class="absolute -top-4 -right-4 w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white">
+            <i class="fas fa-code text-xl"></i>
+          </div>
+          <div class="absolute -bottom-4 -left-4 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white">
+            <i class="fas fa-laptop text-sm"></i>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- 3D About Section -->
-    <section id="about" class="py-20 relative section-3d">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16 fade-in-3d">
-                <h2 class="text-5xl font-bold text-glow bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-4" data-i18n="about_title">About Me</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto"></div>
-            </div>
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="fade-in-3d">
-                    <h3 class="text-3xl font-semibold text-cyan-300 mb-6" data-i18n="contact_info_title">Contact Information</h3>
-                    <div class="space-y-6">
-                        <div class="flex items-center space-x-4 card-3d glass-effect p-4 rounded-lg">
-                            <div class="skill-orb w-12 h-12">
-                                <i class="fas fa-phone text-white"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-white" data-i18n="phone_label">Phone</p>
-                                <p class="text-gray-300" data-i18n="phone_value">+212659916501</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-4 card-3d glass-effect p-4 rounded-lg">
-                            <div class="skill-orb w-12 h-12">
-                                <i class="fas fa-envelope text-white"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-white" data-i18n="email_label">Email</p>
-                                <p class="text-gray-300" data-i18n="email_value">mn.elaakil@gmail.com</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-4 card-3d glass-effect p-4 rounded-lg">
-                            <div class="skill-orb w-12 h-12">
-                                <i class="fas fa-map-marker-alt text-white"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-white" data-i18n="location_label">Location</p>
-                                <p class="text-gray-300" data-i18n="location_value">Casablanca, Morocco</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fade-in-3d">
-                    <h3 class="text-3xl font-semibold text-cyan-300 mb-6" data-i18n="connect_title">Connect With Me</h3>
-                    <div class="space-y-6">
-                        <a href="https://github.com/NOUAIM98" target="_blank" class="flex items-center space-x-4 card-3d glass-effect p-6 rounded-lg hover:neon-border transition-all duration-300">
-                            <div class="skill-orb w-16 h-16 bg-gray-800">
-                                <i class="fab fa-github text-white text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-white" data-i18n="github_label">GitHub</p>
-                                <p class="text-gray-300" data-i18n="github_value">github.com/NOUAIM98</p>
-                            </div>
-                        </a>
-                        <a href="https://www.linkedin.com/in/mohamed-nouaim-elaakil-492748227/" target="_blank" class="flex items-center space-x-4 card-3d glass-effect p-6 rounded-lg hover:neon-border transition-all duration-300">
-                            <div class="skill-orb w-16 h-16 bg-blue-600">
-                                <i class="fab fa-linkedin text-white text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-white" data-i18n="linkedin_label">LinkedIn</p>
-                                <p class="text-gray-300" data-i18n="linkedin_value">Mohamed Nouaim Elaakil</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
+  <!-- About & Contact Section -->
+  <section id="about" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-12">
+        <div class="section-enter">
+          <h2 class="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent" data-en="About Me" data-fr="À Propos de Moi">About Me</h2>
+          <p class="text-lg text-gray-600 mb-8 leading-relaxed" data-en="I am a passionate software engineer who thrives on collaboration and delivering high-quality solutions. My professional approach combines technical expertise with strong communication skills, enabling me to work effectively in diverse teams and tackle complex challenges with creativity and precision." data-fr="Je suis un ingénieur logiciel passionné qui s'épanouit dans la collaboration et la livraison de solutions de haute qualité. Mon approche professionnelle combine l'expertise technique avec de solides compétences en communication, me permettant de travailler efficacement dans des équipes diverses et de relever des défis complexes avec créativité et précision.">
+            I am a passionate software engineer who thrives on collaboration and delivering high-quality solutions. My professional approach combines technical expertise with strong communication skills, enabling me to work effectively in diverse teams and tackle complex challenges with creativity and precision.
+          </p>
+          <button class="btn-3d bg-gradient-to-r from-blue-600 to-blue-800 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg" data-en="Download CV (PDF)" data-fr="Télécharger CV (PDF)">
+            <i class="fas fa-download mr-2"></i><span>Download CV (PDF)</span>
+          </button>
         </div>
-    </section>
-
-    <!-- 3D Skills Section -->
-    <section id="skills" class="py-20 relative">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16 fade-in-3d">
-                <h2 class="text-5xl font-bold text-glow bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-4" data-i18n="skills_title">Skills & Technologies</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto"></div>
+        <div class="section-enter">
+          <h3 class="text-2xl font-bold mb-6 text-gray-800" data-en="Contact Information" data-fr="Informations de Contact">Contact Information</h3>
+          <div class="space-y-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                <i class="fas fa-map-marker-alt text-white"></i>
+              </div>
+              <span class="text-gray-600">Casablanca, Morocco</span>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-effect p-8 rounded-xl card-3d fade-in-3d neon-border">
-                    <div class="skill-orb mx-auto mb-6">
-                        <i class="fas fa-code text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center" data-i18n="prog_title">Programming Languages</h3>
-                    <div class="flex flex-wrap gap-2 justify-center">
-                        <span class="glass-effect text-cyan-300 px-3 py-1 rounded-full text-sm font-medium neon-border">Python</span>
-                        <span class="glass-effect text-yellow-300 px-3 py-1 rounded-full text-sm font-medium neon-border">JavaScript</span>
-                        <span class="glass-effect text-purple-300 px-3 py-1 rounded-full text-sm font-medium neon-border">PHP</span>
-                    </div>
-                </div>
-                <div class="glass-effect p-8 rounded-xl card-3d fade-in-3d neon-border">
-                    <div class="skill-orb mx-auto mb-6">
-                        <i class="fas fa-globe text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center" data-i18n="webdev_title">Web Development</h3>
-                    <div class="flex flex-wrap gap-2 justify-center">
-                        <span class="glass-effect text-orange-300 px-3 py-1 rounded-full text-sm font-medium neon-border">HTML</span>
-                        <span class="glass-effect text-blue-300 px-3 py-1 rounded-full text-sm font-medium neon-border">CSS</span>
-                        <span class="glass-effect text-yellow-300 px-3 py-1 rounded-full text-sm font-medium neon-border">JavaScript</span>
-                    </div>
-                </div>
-                <div class="glass-effect p-8 rounded-xl card-3d fade-in-3d neon-border">
-                    <div class="skill-orb mx-auto mb-6">
-                        <i class="fas fa-database text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center" data-i18n="db_title">Databases</h3>
-                    <div class="flex flex-wrap gap-2 justify-center">
-                        <span class="glass-effect text-blue-300 px-3 py-1 rounded-full text-sm font-medium neon-border">MySQL</span>
-                        <span class="glass-effect text-red-300 px-3 py-1 rounded-full text-sm font-medium neon-border">Oracle</span>
-                    </div>
-                </div>
-                <div class="glass-effect p-8 rounded-xl card-3d fade-in-3d neon-border">
-                    <div class="skill-orb mx-auto mb-6">
-                        <i class="fas fa-tools text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center" data-i18n="tools_title">Tools & Systems</h3>
-                    <div class="flex flex-wrap gap-2 justify-center">
-                        <span class="glass-effect text-orange-300 px-3 py-1 rounded-full text-sm font-medium neon-border">Ubuntu</span>
-                        <span class="glass-effect text-blue-300 px-3 py-1 rounded-full text-sm font-medium neon-border">Draw.io</span>
-                    </div>
-                </div>
-                <div class="glass-effect p-8 rounded-xl card-3d fade-in-3d neon-border">
-                    <div class="skill-orb mx-auto mb-6">
-                        <i class="fab fa-git-alt text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center" data-i18n="version_title">Version Control</h3>
-                    <div class="flex flex-wrap gap-2 justify-center">
-                        <span class="glass-effect text-gray-300 px-3 py-1 rounded-full text-sm font-medium neon-border">Git</span>
-                    </div>
-                </div>
-                <div class="glass-effect p-8 rounded-xl card-3d fade-in-3d neon-border">
-                    <div class="skill-orb mx-auto mb-6">
-                        <i class="fas fa-language text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-cyan-300 mb-4 text-center" data-i18n="lang_title">Languages</h3>
-                    <div class="space-y-2">
-                        <div class="flex justify-between">
-                            <span class="text-sm font-medium text-gray-300" data-i18n="lang_list1">Arabic, French, English</span>
-                            <span class="text-sm text-green-400 font-medium" data-i18n="fluent">Fluent</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-sm font-medium text-gray-300" data-i18n="lang_list2">Chinese, Spanish</span>
-                            <span class="text-sm text-yellow-400 font-medium" data-i18n="elementary">Elementary</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                <i class="fas fa-phone text-white"></i>
+              </div>
+              <span class="text-gray-600">+212659916501</span>
             </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                <i class="fas fa-envelope text-white"></i>
+              </div>
+              <span class="text-gray-600">mn.elaakil@gmail.com</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                <i class="fab fa-github text-white"></i>
+              </div>
+              <a href="https://github.com/NOUAIM98" class="text-blue-600 hover:text-blue-800 transition-colors">github.com/NOUAIM98</a>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                <i class="fab fa-linkedin text-white"></i>
+              </div>
+              <a href="#" class="text-blue-600 hover:text-blue-800 transition-colors">Mohamed Nouaim Elaakil</a>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Bright Projects Section -->
-    <section id="projects" class="py-20 relative">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16 fade-in-3d">
-                <h2 class="text-5xl font-bold text-glow bg-gradient-to-r from-yellow-400 to-pink-500 bg-clip-text text-transparent mb-4" data-i18n="projects_title">Featured Projects</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-yellow-400 to-pink-500 mx-auto"></div>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- BizLinker Project -->
-                <div class="project-card bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 p-1 rounded-2xl card-3d fade-in-3d">
-                    <div class="bg-gray-900 rounded-xl p-8 h-full">
-                        <div class="project-header mb-6">
-                            <div class="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full mb-4 mx-auto pulse-glow">
-                                <i class="fas fa-link text-white text-3xl"></i>
-                            </div>
-                            <div class="tech-icons flex justify-center space-x-2 mb-4">
-                                <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center bounce-icon">
-                                    <i class="fab fa-php text-white text-sm"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center bounce-icon" style="animation-delay: 0.1s;">
-                                    <i class="fab fa-laravel text-white text-sm"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center bounce-icon" style="animation-delay: 0.2s;">
-                                    <i class="fab fa-react text-white text-sm"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center bounce-icon" style="animation-delay: 0.3s;">
-                                    <i class="fas fa-database text-white text-sm"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-3 text-center" data-i18n="p1_title">BizLinker – Web & Mobile Platform</h3>
-                        <p class="text-gray-300 mb-6 text-center" data-i18n="p1_desc">A comprehensive business networking platform connecting entrepreneurs and professionals.</p>
-                        <div class="flex flex-wrap gap-2 mb-6 justify-center">
-                            <span class="bg-gradient-to-r from-purple-400 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">PHP</span>
-                            <span class="bg-gradient-to-r from-red-400 to-red-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">Laravel</span>
-                            <span class="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">React</span>
-                            <span class="bg-gradient-to-r from-orange-400 to-orange-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">MySQL</span>
-                        </div>
-                        <div class="text-center">
-                            <p class="text-yellow-400 font-bold text-lg" data-i18n="p1_role">Backend Developer, Team Leader</p>
-                        </div>
-                    </div>
-                </div>
+  <!-- Skills Section -->
+  <section id="skills" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 section-enter">
+        <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent" data-en="Skills & Technologies" data-fr="Compétences & Technologies">Skills & Technologies</h2>
+        <p class="text-lg text-gray-600" data-en="My technical expertise and language proficiency" data-fr="Mon expertise technique et mes compétences linguistiques">My technical expertise and language proficiency</p>
+      </div>
 
-                <!-- Elderly Social App -->
-                <div class="project-card bg-gradient-to-br from-green-400 via-teal-500 to-blue-500 p-1 rounded-2xl card-3d fade-in-3d">
-                    <div class="bg-gray-900 rounded-xl p-8 h-full">
-                        <div class="project-header mb-6">
-                            <div class="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-400 to-teal-500 rounded-full mb-4 mx-auto pulse-glow">
-                                <i class="fas fa-users text-white text-3xl"></i>
-                            </div>
-                            <div class="tech-icons flex justify-center space-x-2 mb-4">
-                                <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center bounce-icon">
-                                    <i class="fab fa-php text-white text-sm"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center bounce-icon" style="animation-delay: 0.1s;">
-                                    <i class="fas fa-database text-white text-sm"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center bounce-icon" style="animation-delay: 0.2s;">
-                                    <i class="fab fa-html5 text-white text-sm"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center bounce-icon" style="animation-delay: 0.3s;">
-                                    <i class="fab fa-css3 text-white text-sm"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-3 text-center" data-i18n="p2_title">Elderly Social App</h3>
-                        <p class="text-gray-300 mb-6 text-center" data-i18n="p2_desc">A social networking application designed specifically for elderly users to connect and share experiences.</p>
-                        <div class="flex flex-wrap gap-2 mb-6 justify-center">
-                            <span class="bg-gradient-to-r from-purple-400 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">PHP</span>
-                            <span class="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">MySQL</span>
-                            <span class="bg-gradient-to-r from-orange-400 to-orange-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">HTML</span>
-                            <span class="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">CSS</span>
-                        </div>
-                        <div class="text-center">
-                            <p class="text-yellow-400 font-bold text-lg" data-i18n="p2_role">Backend & Database Developer</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Real Estate Portal -->
-                <div class="project-card bg-gradient-to-br from-orange-400 via-red-500 to-pink-500 p-1 rounded-2xl card-3d fade-in-3d">
-                    <div class="bg-gray-900 rounded-xl p-8 h-full">
-                        <div class="project-header mb-6">
-                            <div class="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-400 to-red-500 rounded-full mb-4 mx-auto pulse-glow">
-                                <i class="fas fa-home text-white text-3xl"></i>
-                            </div>
-                            <div class="tech-icons flex justify-center space-x-2 mb-4">
-                                <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center bounce-icon">
-                                    <i class="fab fa-java text-white text-sm"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center bounce-icon" style="animation-delay: 0.1s;">
-                                    <i class="fas fa-database text-white text-sm"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center bounce-icon" style="animation-delay: 0.2s;">
-                                    <i class="fas fa-search text-white text-sm"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center bounce-icon" style="animation-delay: 0.3s;">
-                                    <i class="fas fa-map text-white text-sm"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-3 text-center" data-i18n="p3_title">Real Estate Search Portal</h3>
-                        <p class="text-gray-300 mb-6 text-center" data-i18n="p3_desc">A comprehensive real estate platform for searching, filtering, and managing property listings.</p>
-                        <div class="flex flex-wrap gap-2 mb-6 justify-center">
-                            <span class="bg-gradient-to-r from-orange-400 to-orange-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">Java</span>
-                            <span class="bg-gradient-to-r from-red-400 to-red-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">Oracle</span>
-                        </div>
-                        <div class="text-center">
-                            <p class="text-yellow-400 font-bold text-lg" data-i18n="p3_role">Project Manager, Systems Designer</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Blood Bank App -->
-                <div class="project-card bg-gradient-to-br from-red-400 via-pink-500 to-purple-500 p-1 rounded-2xl card-3d fade-in-3d">
-                    <div class="bg-gray-900 rounded-xl p-8 h-full">
-                        <div class="project-header mb-6">
-                            <div class="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-400 to-pink-500 rounded-full mb-4 mx-auto pulse-glow">
-                                <i class="fas fa-mobile-alt text-white text-3xl"></i>
-                            </div>
-                            <div class="tech-icons flex justify-center space-x-2 mb-4">
-                                <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center bounce-icon">
-                                    <i class="fab fa-java text-white text-sm"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center bounce-icon" style="animation-delay: 0.1s;">
-                                    <i class="fas fa-tint text-white text-sm"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center bounce-icon" style="animation-delay: 0.2s;">
-                                    <i class="fas fa-hospital text-white text-sm"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center bounce-icon" style="animation-delay: 0.3s;">
-                                    <i class="fas fa-location-arrow text-white text-sm"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-3 text-center" data-i18n="p4_title">Blood Bank Finder App (Android)</h3>
-                        <p class="text-gray-300 mb-6 text-center" data-i18n="p4_desc">A mobile application helping users locate nearby blood banks and manage donation schedules.</p>
-                        <div class="flex flex-wrap gap-2 mb-6 justify-center">
-                            <span class="bg-gradient-to-r from-orange-400 to-orange-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">Java</span>
-                        </div>
-                        <div class="text-center">
-                            <p class="text-yellow-400 font-bold text-lg" data-i18n="p4_role">UI Designer, Team Leader</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="card-3d bg-white p-6 rounded-xl shadow-lg border border-gray-100 section-enter">
+          <h3 class="text-xl font-bold mb-4 text-gray-800" data-en="Programming" data-fr="Programmation">Programming</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium">Python</span>
+            <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium">JavaScript</span>
+            <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium">PHP</span>
+          </div>
         </div>
-    </section>
 
-    <!-- 3D Experience Section -->
-    <section id="experience" class="py-20 relative">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16 fade-in-3d">
-                <h2 class="text-5xl font-bold text-glow bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-4" data-i18n="experience_title">Work Experience</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto"></div>
-            </div>
-            <div class="space-y-8">
-                <div class="glass-effect p-8 rounded-xl card-3d fade-in-3d neon-border hologram">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <div>
-                            <h3 class="text-2xl font-semibold text-cyan-300">Omnishore Med Tech</h3>
-                            <p class="text-purple-400 font-medium" data-i18n="exp1_role">SQL Server Integration, ETL, Data Management</p>
-                        </div>
-                        <span class="text-gray-400 font-medium text-lg">2024</span>
-                    </div>
-                    <p class="text-gray-300" data-i18n="exp1_desc">Specialized in database integration and ETL processes for medical technology solutions.</p>
-                </div>
-                <div class="glass-effect p-8 rounded-xl card-3d fade-in-3d neon-border hologram">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <div>
-                            <h3 class="text-2xl font-semibold text-cyan-300">PC INFO</h3>
-                            <p class="text-purple-400 font-medium" data-i18n="exp2_role">Cybersecurity, Risk Management</p>
-                        </div>
-                        <span class="text-gray-400 font-medium text-lg">2023</span>
-                    </div>
-                    <p class="text-gray-300" data-i18n="exp2_desc">Focused on cybersecurity protocols and risk assessment for IT infrastructure.</p>
-                </div>
-                <div class="glass-effect p-8 rounded-xl card-3d fade-in-3d neon-border hologram">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <div>
-                            <h3 class="text-2xl font-semibold text-cyan-300" data-i18n="exp3_company">Coach – Kingan FC, China</h3>
-                            <p class="text-purple-400 font-medium" data-i18n="exp3_role">Football Coach (U12)</p>
-                        </div>
-                        <span class="text-gray-400 font-medium text-lg">2019</span>
-                    </div>
-                    <p class="text-gray-300" data-i18n="exp3_desc">Led and trained youth football teams, developing leadership and communication skills.</p>
-                </div>
-                <div class="glass-effect p-8 rounded-xl card-3d fade-in-3d neon-border hologram">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <div>
-                            <h3 class="text-2xl font-semibold text-cyan-300">Intern – Group Benhlou</h3>
-                            <p class="text-purple-400 font-medium" data-i18n="exp4_role">Residential Construction</p>
-                        </div>
-                        <span class="text-gray-400 font-medium text-lg">2018</span>
-                    </div>
-                    <p class="text-gray-300" data-i18n="exp4_desc">Gained hands-on experience in construction project management and residential development.</p>
-                </div>
-                <div class="glass-effect p-8 rounded-xl card-3d fade-in-3d neon-border hologram">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <div>
-                            <h3 class="text-2xl font-semibold text-cyan-300">Intern – In All Africa</h3>
-                            <p class="text-purple-400 font-medium" data-i18n="exp5_role">AutoCAD Electrical Design</p>
-                        </div>
-                        <span class="text-gray-400 font-medium text-lg">2017</span>
-                    </div>
-                    <p class="text-gray-300" data-i18n="exp5_desc">Developed technical drawing skills and electrical system design using AutoCAD software.</p>
-                </div>
-            </div>
+        <div class="card-3d bg-white p-6 rounded-xl shadow-lg border border-gray-100 section-enter">
+          <h3 class="text-xl font-bold mb-4 text-gray-800" data-en="Web Development" data-fr="Développement Web">Web Development</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium">HTML</span>
+            <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium">CSS</span>
+            <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium">JavaScript</span>
+          </div>
         </div>
-    </section>
 
-    <!-- 3D Education & Achievements Section -->
-    <section class="py-20 relative">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16">
-                <!-- Education -->
-                <div class="fade-in-3d">
-                    <h2 class="text-4xl font-bold text-glow bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-8" data-i18n="education_title">Education</h2>
-                    <div class="space-y-6">
-                        <div class="glass-effect p-6 rounded-lg card-3d neon-border">
-                            <h3 class="text-xl font-semibold text-cyan-300" data-i18n="edu1_title">BSc Software Engineering</h3>
-                            <p class="text-purple-400 font-medium">Eastern Mediterranean University, Cyprus</p>
-                            <p class="text-gray-400">2021 – 2025</p>
-                        </div>
-                        <div class="glass-effect p-6 rounded-lg card-3d neon-border">
-                            <h3 class="text-xl font-semibold text-cyan-300" data-i18n="edu2_title">Spanish Language</h3>
-                            <p class="text-purple-400 font-medium">Instituto Cervantes</p>
-                            <p class="text-gray-400">2020 – 2021</p>
-                        </div>
-                        <div class="glass-effect p-6 rounded-lg card-3d neon-border">
-                            <h3 class="text-xl font-semibold text-cyan-300" data-i18n="edu3_title">Chinese Language</h3>
-                            <p class="text-purple-400 font-medium">Soochow University</p>
-                            <p class="text-gray-400">2019 – 2020</p>
-                        </div>
-                        <div class="glass-effect p-6 rounded-lg card-3d neon-border">
-                            <h3 class="text-xl font-semibold text-cyan-300" data-i18n="edu4_title">Engineering</h3>
-                            <p class="text-purple-400 font-medium">EIGSICA</p>
-                            <p class="text-gray-400">2016 – 2018</p>
-                        </div>
-                        <div class="glass-effect p-6 rounded-lg card-3d neon-border">
-                            <h3 class="text-xl font-semibold text-cyan-300" data-i18n="edu5_title">Physics-Chemistry Baccalaureate</h3>
-                            <p class="text-gray-400">2016</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Certificates & Awards -->
-                <div class="fade-in-3d">
-                    <h2 class="text-4xl font-bold text-glow bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-8" data-i18n="certs_title">Certificates & Awards</h2>
-                    <div class="space-y-4">
-                        <div class="glass-effect p-4 rounded-lg card-3d neon-border">
-                            <h3 class="font-semibold text-cyan-300" data-i18n="cert1">TOEIC C1</h3>
-                            <p class="text-gray-400">EIGSICA</p>
-                        </div>
-                        <div class="glass-effect p-4 rounded-lg card-3d neon-border">
-                            <h3 class="font-semibold text-cyan-300" data-i18n="cert2">TCF B2</h3>
-                            <p class="text-gray-400">French Institute</p>
-                        </div>
-                        <div class="glass-effect p-4 rounded-lg card-3d neon-border">
-                            <h3 class="font-semibold text-cyan-300" data-i18n="cert3">Web Development Certificates</h3>
-                            <p class="text-gray-400">Udemy</p>
-                        </div>
-                        <div class="glass-effect p-4 rounded-lg card-3d neon-border hologram">
-                            <h3 class="font-semibold text-purple-400" data-i18n="award1">President, Moroccan Society</h3>
-                            <p class="text-gray-400">2023</p>
-                        </div>
-                        <div class="glass-effect p-4 rounded-lg card-3d neon-border hologram">
-                            <h3 class="font-semibold text-purple-400" data-i18n="award2">Vice President, Moroccan Society</h3>
-                            <p class="text-gray-400">2022</p>
-                        </div>
-                        <div class="glass-effect p-4 rounded-lg card-3d neon-border bg-gradient-to-r from-yellow-500/20 to-orange-500/20">
-                            <h3 class="font-semibold text-yellow-400" data-i18n="award3">1st Place – 400m Race</h3>
-                            <p class="text-gray-400">Eastern Mediterranean University</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="card-3d bg-white p-6 rounded-xl shadow-lg border border-gray-100 section-enter">
+          <h3 class="text-xl font-bold mb-4 text-gray-800" data-en="Databases" data-fr="Bases de Données">Databases</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium">MySQL</span>
+            <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium">Oracle</span>
+          </div>
         </div>
-    </section>
 
-    <!-- 3D Contact Section -->
-    <section id="contact" class="py-20 relative overflow-hidden">
-        <div class="matrix-bg"></div>
-        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <div class="fade-in-3d">
-                <h2 class="text-5xl font-bold text-glow bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-4" data-i18n="contact_title">Let's Work Together</h2>
-                <p class="text-xl text-gray-300 mb-8" data-i18n="contact_desc">Ready to bring your ideas to life? Let's connect and create something amazing.</p>
-                <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                    <a href="mailto:mn.elaakil@gmail.com" class="glass-effect neon-border px-8 py-4 rounded-full font-semibold hover:bg-cyan-400 hover:text-gray-900 transition-all duration-300 inline-flex items-center justify-center card-3d">
-                        <i class="fas fa-envelope mr-2"></i>
-                        <span data-i18n="send_email">Send Email</span>
-                    </a>
-                    <a href="tel:+212659916501" class="glass-effect neon-border px-8 py-4 rounded-full font-semibold hover:bg-purple-500 hover:text-white transition-all duration-300 inline-flex items-center justify-center card-3d">
-                        <i class="fas fa-phone mr-2"></i>
-                        <span data-i18n="call_now">Call Now</span>
-                    </a>
-                </div>
-            </div>
+        <div class="card-3d bg-white p-6 rounded-xl shadow-lg border border-gray-100 section-enter">
+          <h3 class="text-xl font-bold mb-4 text-gray-800" data-en="Tools" data-fr="Outils">Tools</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium">Ubuntu</span>
+            <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium">Draw.io</span>
+            <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium">Git</span>
+          </div>
         </div>
-    </section>
 
-    <!-- 3D Footer -->
-    <footer class="bg-gray-900/50 backdrop-blur-md py-12 relative">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center">
-                <h3 class="text-3xl font-bold text-glow bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-4">Mohamed Nouaim El Aakil</h3>
-                <p class="text-gray-400 mb-6" data-i18n="footer_role">Software Engineering</p>
-                <div class="flex justify-center space-x-6 mb-8">
-                    <a href="https://github.com/NOUAIM98" target="_blank" class="skill-orb w-12 h-12 hover:scale-110 transition-all duration-300">
-                        <i class="fab fa-github text-white text-xl"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/mohamed-nouaim-elaakil-492748227/" target="_blank" class="skill-orb w-12 h-12 hover:scale-110 transition-all duration-300">
-                        <i class="fab fa-linkedin text-white text-xl"></i>
-                    </a>
-                    <a href="mailto:mn.elaakil@gmail.com" class="skill-orb w-12 h-12 hover:scale-110 transition-all duration-300">
-                        <i class="fas fa-envelope text-white text-xl"></i>
-                    </a>
-                </div>
-                <p class="text-gray-500" data-i18n="rights">© 2024 Mohamed Nouaim El Aakil. All rights reserved.</p>
+        <div class="card-3d bg-white p-6 rounded-xl shadow-lg border border-gray-100 section-enter md:col-span-2">
+          <h3 class="text-xl font-bold mb-4 text-gray-800" data-en="Languages" data-fr="Langues">Languages</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <h4 class="font-semibold text-gray-700 mb-2" data-en="Fluent" data-fr="Courant">Fluent</h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium" data-en="Arabic" data-fr="Arabe">Arabic</span>
+                <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium" data-en="French" data-fr="Français">French</span>
+                <span class="skill-badge text-white px-3 py-1 rounded-full text-sm font-medium" data-en="English" data-fr="Anglais">English</span>
+              </div>
             </div>
+            <div>
+              <h4 class="font-semibold text-gray-700 mb-2" data-en="Elementary" data-fr="Élémentaire">Elementary</h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm font-medium" data-en="Chinese" data-fr="Chinois">Chinese</span>
+                <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm font-medium" data-en="Spanish" data-fr="Espagnol">Spanish</span>
+              </div>
+            </div>
+          </div>
         </div>
-    </footer>
 
-    <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        }
+      </div>
+    </div>
+  </section>
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+  <!-- Projects Section -->
+  <section id="projects" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 section-enter">
+        <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent" data-en="Featured Projects" data-fr="Projets Phares">Featured Projects</h2>
+        <p class="text-lg text-gray-600" data-en="A showcase of my development work and leadership experience" data-fr="Une vitrine de mon travail de développement et de mon expérience de leadership">A showcase of my development work and leadership experience</p>
+      </div>
 
-        // 3D scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Project 1 -->
+        <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 section-enter">
+          <div class="h-48 bg-gradient-to-br from-blue-100 to-white flex items-center justify-center">
+            <i class="fas fa-network-wired text-6xl text-blue-600"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-gray-800">BizLinker</h3>
+            <p class="text-gray-600 mb-3">Web & Mobile Platform — Business networking platform connecting professionals and enterprises.</p>
+            <p class="text-sm text-blue-600 font-semibold mb-3">Role: Backend Developer & Team Leader</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">PHP</span>
+              <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">Laravel</span>
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">React</span>
+              <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">MySQL</span>
+            </div>
+            <div class="flex space-x-3">
+              <button class="btn-3d bg-gray-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-700">
+                <i class="fab fa-github mr-1"></i>GitHub
+              </button>
+              <button class="btn-3d border border-blue-600 text-blue-600 px-4 py-2 rounded-lg text-sm hover:bg-blue-600 hover:text-white"
+                      data-demo-url="https://example.com/bizlinker">
+                <i class="fas fa-external-link-alt mr-1"></i>Live Demo
+              </button>
+            </div>
+          </div>
+        </div>
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+        <!-- Project 2 -->
+        <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 section-enter">
+          <div class="h-48 bg-gradient-to-br from-orange-100 to-blue-100 flex items-center justify-center">
+            <i class="fas fa-users text-6xl text-orange-500"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-gray-800">Elderly Social App</h3>
+            <p class="text-gray-600 mb-3">Social application designed specifically for elderly users with intuitive interface and accessibility features.</p>
+            <p class="text-sm text-blue-600 font-semibold mb-3">Role: Backend & Database Developer</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">PHP</span>
+              <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">MySQL</span>
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">HTML</span>
+              <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">CSS</span>
+            </div>
+            <div class="flex space-x-3">
+              <button class="btn-3d bg-gray-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-700">
+                <i class="fab fa-github mr-1"></i>GitHub
+              </button>
+              <button class="btn-3d border border-blue-600 text-blue-600 px-4 py-2 rounded-lg text-sm hover:bg-blue-600 hover:text-white"
+                      data-demo-url="https://example.com/elderly-social-app">
+                <i class="fas fa-external-link-alt mr-1"></i>Live Demo
+              </button>
+            </div>
+          </div>
+        </div>
 
-        // Observe all elements with fade-in-3d class
-        document.querySelectorAll('.fade-in-3d').forEach(el => {
-            observer.observe(el);
-        });
+        <!-- Project 3 -->
+        <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 section-enter">
+          <div class="h-48 bg-gradient-to-br from-blue-100 to-orange-100 flex items-center justify-center">
+            <i class="fas fa-home text-6xl text-blue-600"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-gray-800">Real Estate Search Portal</h3>
+            <p class="text-gray-600 mb-3">Comprehensive property listings platform with advanced search filters and user management.</p>
+            <p class="text-sm text-blue-600 font-semibold mb-3">Role: Project Manager & Systems Designer</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Java</span>
+              <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">Oracle</span>
+            </div>
+            <div class="flex space-x-3">
+              <button class="btn-3d bg-gray-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-700">
+                <i class="fab fa-github mr-1"></i>GitHub
+              </button>
+              <button class="btn-3d border border-blue-600 text-blue-600 px-4 py-2 rounded-lg text-sm hover:bg-blue-600 hover:text-white"
+                      data-demo-url="https://example.com/real-estate-portal">
+                <i class="fas fa-external-link-alt mr-1"></i>Live Demo
+              </button>
+            </div>
+          </div>
+        </div>
 
-        // Parallax effect for background elements
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.matrix-bg');
-            parallaxElements.forEach(element => {
-                const speed = 0.5;
-                element.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
+        <!-- Project 4 -->
+        <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 section-enter">
+          <div class="h-48 bg-gradient-to-br from-orange-100 to-blue-100 flex items-center justify-center">
+            <i class="fas fa-tint text-6xl text-orange-500"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-gray-800">Blood Bank Finder</h3>
+            <p class="text-gray-600 mb-3">Android application to help users locate nearby blood banks and donation centers quickly.</p>
+            <p class="text-sm text-blue-600 font-semibold mb-3">Role: UI Designer & Team Leader</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Java</span>
+              <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">Android</span>
+            </div>
+            <div class="flex space-x-3">
+              <button class="btn-3d bg-gray-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-700">
+                <i class="fab fa-github mr-1"></i>GitHub
+              </button>
+              <button class="btn-3d border border-blue-600 text-blue-600 px-4 py-2 rounded-lg text-sm hover:bg-blue-600 hover:text-white"
+                      data-demo-url="https://example.com/blood-bank-finder">
+                <i class="fas fa-external-link-alt mr-1"></i>Live Demo
+              </button>
+            </div>
+          </div>
+        </div>
 
-        // Add dynamic glow effect to navigation
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.style.boxShadow = '0 0 30px rgba(0, 255, 255, 0.3)';
-            } else {
-                nav.style.boxShadow = 'none';
-            }
-        });
+      </div>
+    </div>
+  </section>
 
-        // Interactive cursor effect
-        document.addEventListener('mousemove', function(e) {
-            const cursor = document.createElement('div');
-            cursor.className = 'fixed w-2 h-2 bg-cyan-400 rounded-full pointer-events-none z-50 opacity-50';
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            cursor.style.animation = 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite';
-            document.body.appendChild(cursor);
-            setTimeout(() => { cursor.remove(); }, 1000);
-        });
+  <!-- Experience Section -->
+  <section id="experience" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 section-enter">
+        <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent" data-en="Professional Experience" data-fr="Expérience Professionnelle">Professional Experience</h2>
+        <p class="text-lg text-gray-600" data-en="My journey through various roles and industries" data-fr="Mon parcours à travers divers rôles et industries">My journey through various roles and industries</p>
+      </div>
 
-        // Add random floating particles
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'fixed w-1 h-1 bg-cyan-400 rounded-full pointer-events-none opacity-30';
-            particle.style.left = Math.random() * window.innerWidth + 'px';
-            particle.style.top = window.innerHeight + 'px';
-            particle.style.animation = `float-up ${Math.random() * 3 + 2}s linear forwards`;
-            document.body.appendChild(particle);
-            setTimeout(() => { particle.remove(); }, 5000);
-        }
+      <div class="max-w-4xl mx-auto">
+        <div class="timeline-item mb-12 section-enter">
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+              <h3 class="text-xl font-bold text-gray-800">Omnishore Med Tech</h3>
+              <span class="text-blue-600 font-semibold">2024</span>
+            </div>
+            <p class="text-gray-600 mb-2">SQL Server integration, ETL processes, and data management in medical technology sector.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">SQL Server</span>
+              <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">ETL</span>
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Data Management</span>
+            </div>
+          </div>
+        </div>
 
-        // Create particles periodically
-        setInterval(createParticle, 2000);
+        <div class="timeline-item mb-12 section-enter">
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+              <h3 class="text-xl font-bold text-gray-800">PC INFO</h3>
+              <span class="text-blue-600 font-semibold">2023</span>
+            </div>
+            <p class="text-gray-600 mb-2">Cybersecurity specialist focusing on risk management and security protocols implementation.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Cybersecurity</span>
+              <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">Risk Management</span>
+            </div>
+          </div>
+        </div>
 
-        // Add CSS for particle animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes float-up {
-                to {
-                    transform: translateY(-${window.innerHeight + 100}px);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+        <div class="timeline-item mb-12 section-enter">
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+              <h3 class="text-xl font-bold text-gray-800">Coach – Kingan FC, China</h3>
+              <span class="text-blue-600 font-semibold">2019</span>
+            </div>
+            <p class="text-gray-600 mb-2">Football coach for U12 team, developing leadership and communication skills in international environment.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Leadership</span>
+              <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">Communication</span>
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Team Management</span>
+            </div>
+          </div>
+        </div>
 
-    <!-- NEW: Translation logic (added without touching your existing script) -->
-    <script>
-      const translations = {
-        en: {
-          title: "Mohamed Nouaim El Aakil - 3D Portfolio",
-          nav_name: "Mohamed Nouaim",
-          nav_home: "Home",
-          nav_about: "About",
-          nav_skills: "Skills",
-          nav_projects: "Projects",
-          nav_experience: "Experience",
-          nav_contact: "Contact",
+        <div class="timeline-item mb-12 section-enter">
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+              <h3 class="text-xl font-bold text-gray-800">Intern – Group Benhlou</h3>
+              <span class="text-blue-600 font-semibold">2018</span>
+            </div>
+            <p class="text-gray-600 mb-2">Residential construction internship, gaining hands-on experience in project management and construction processes.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Construction</span>
+              <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">Project Management</span>
+            </div>
+          </div>
+        </div>
 
-          hero_title: "Mohamed Nouaim<br>El Aakil",
-          hero_subtitle: "Software Engineering",
-          hero_text: "Motivated and dedicated software engineer with strong skills in programming, problem-solving, and teamwork. Experienced through internships and hands-on projects.",
-          btn_contact: "Get In Touch",
-          btn_projects: "View Projects",
+        <div class="timeline-item section-enter">
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+              <h3 class="text-xl font-bold text-gray-800">Intern – In All Africa</h3>
+              <span class="text-blue-600 font-semibold">2017</span>
+            </div>
+            <p class="text-gray-600 mb-2">AutoCAD electrical design internship, developing technical drawing and electrical system design skills.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">AutoCAD</span>
+              <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">Electrical Design</span>
+            </div>
+          </div>
+        </div>
 
-          about_title: "About Me",
-          contact_info_title: "Contact Information",
-          phone_label: "Phone",
-          phone_value: "+21259916501",
-          email_label: "Email",
-          email_value: "mn.elaakil@gmail.com",
-          location_label: "Location",
-          location_value: "Casablanca, Morocco",
-          connect_title: "Connect With Me",
-          github_label: "GitHub",
-          github_value: "github.com/NOUAIM98",
-          linkedin_label: "LinkedIn",
-          linkedin_value: "Mohamed Nouaim Elaakil",
+      </div>
+    </div>
+  </section>
 
-          skills_title: "Skills & Technologies",
-          prog_title: "Programming Languages",
-          webdev_title: "Web Development",
-          db_title: "Databases",
-          tools_title: "Tools & Systems",
-          version_title: "Version Control",
-          lang_title: "Languages",
-          lang_list1: "Arabic, French, English",
-          lang_list2: "Chinese, Spanish",
-          fluent: "Fluent",
-          elementary: "Elementary",
+  <!-- Education & Certificates -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-12">
+        <div class="section-enter">
+          <h2 class="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent" data-en="Education" data-fr="Formation">Education</h2>
+          <div class="space-y-6">
+            <div class="card-3d bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-800">BSc Software Engineering</h3>
+              <p class="text-blue-600 font-semibold">Eastern Mediterranean University</p>
+              <p class="text-gray-600">2021 – 2025</p>
+            </div>
+            <div class="card-3d bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-800">Spanish Language</h3>
+              <p class="text-blue-600 font-semibold">Instituto Cervantes</p>
+              <p class="text-gray-600">2020 – 2021</p>
+            </div>
+            <div class="card-3d bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-800">Chinese Language</h3>
+              <p class="text-blue-600 font-semibold">Soochow University</p>
+              <p class="text-gray-600">2019 – 2020</p>
+            </div>
+            <div class="card-3d bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-800">Engineering</h3>
+              <p class="text-blue-600 font-semibold">EIGSICA</p>
+              <p class="text-gray-600">2016 – 2018</p>
+            </div>
+          </div>
+        </div>
 
-          projects_title: "Featured Projects",
-          p1_title: "BizLinker – Web & Mobile Platform",
-          p1_desc: "A comprehensive business networking platform connecting entrepreneurs and professionals.",
-          p1_role: "Backend Developer, Team Leader",
+        <div class="section-enter">
+          <h2 class="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent" data-en="Certificates & Awards" data-fr="Certificats & Récompenses">Certificates & Awards</h2>
+          <div class="space-y-4">
+            <div class="card-3d bg-white p-4 rounded-lg shadow-lg border border-gray-100 flex items-center space-x-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-orange-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-certificate text-white"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-800">TOEIC C1</h4>
+                <p class="text-sm text-gray-600">EIGSICA</p>
+              </div>
+            </div>
+            <div class="card-3d bg-white p-4 rounded-lg shadow-lg border border-gray-100 flex items-center space-x-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-orange-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-certificate text-white"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-800">TCF B2</h4>
+                <p class="text-sm text-gray-600">French Institute</p>
+              </div>
+            </div>
+            <div class="card-3d bg-white p-4 rounded-lg shadow-lg border border-gray-100 flex items-center space-x-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-orange-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-code text-white"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-800">Web Development Certificates</h4>
+                <p class="text-sm text-gray-600">Udemy</p>
+              </div>
+            </div>
+            <div class="card-3d bg-white p-4 rounded-lg shadow-lg border border-gray-100 flex items-center space-x-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-orange-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-users text-white"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-800">Moroccan Society Leadership</h4>
+                <p class="text-sm text-gray-600">Vice President 2022, President 2023</p>
+              </div>
+            </div>
+            <div class="card-3d bg-white p-4 rounded-lg shadow-lg border border-gray-100 flex items-center space-x-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-orange-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-trophy text-white"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-800">1st Place – 400m Race</h4>
+                <p class="text-sm text-gray-600">EMU</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-          p2_title: "Elderly Social App",
-          p2_desc: "A social networking application designed specifically for elderly users to connect and share experiences.",
-          p2_role: "Backend & Database Developer",
+      </div>
+    </div>
+  </section>
 
-          p3_title: "Real Estate Search Portal",
-          p3_desc: "A comprehensive real estate platform for searching, filtering, and managing property listings.",
-          p3_role: "Project Manager, Systems Designer",
+  <!-- Contact Section -->
+  <section id="contact" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 section-enter">
+        <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent" data-en="Let's Work Together" data-fr="Travaillons Ensemble">Let's Work Together</h2>
+        <p class="text-lg text-gray-600" data-en="Ready to collaborate on your next project? Let's connect and create something amazing!" data-fr="Prêt à collaborer sur votre prochain projet ? Connectons-nous et créons quelque chose d'extraordinaire !">Ready to collaborate on your next project? Let's connect and create something amazing!</p>
+      </div>
 
-          p4_title: "Blood Bank Finder App (Android)",
-          p4_desc: "A mobile application helping users locate nearby blood banks and manage donation schedules.",
-          p4_role: "UI Designer, Team Leader",
+      <div class="grid md:grid-cols-2 gap-12">
+        <div class="section-enter">
+          <div class="flex space-x-4 mb-8">
+            <button class="btn-3d bg-gradient-to-r from-blue-600 to-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg flex-1" data-en="Send Email" data-fr="Envoyer Email">
+              <i class="fas fa-envelope mr-2"></i><span>Send Email</span>
+            </button>
+            <button class="btn-3d bg-gradient-to-r from-orange-500 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg flex-1" data-en="Call Now" data-fr="Appeler">
+              <i class="fas fa-phone mr-2"></i><span>Call Now</span>
+            </button>
+          </div>
 
-          experience_title: "Work Experience",
-          exp1_role: "SQL Server Integration, ETL, Data Management",
-          exp1_desc: "Specialized in database integration and ETL processes for medical technology solutions.",
-          exp2_role: "Cybersecurity, Risk Management",
-          exp2_desc: "Focused on cybersecurity protocols and risk assessment for IT infrastructure.",
-          exp3_company: "Coach – Kingan FC, China",
-          exp3_role: "Football Coach (U12)",
-          exp3_desc: "Led and trained youth football teams, developing leadership and communication skills.",
-          exp4_role: "Residential Construction",
-          exp4_desc: "Gained hands-on experience in construction project management and residential development.",
-          exp5_role: "AutoCAD Electrical Design",
-          exp5_desc: "Developed technical drawing skills and electrical system design using AutoCAD software.",
+          <div class="card-3d bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold mb-6 text-gray-800" data-en="Send a Message" data-fr="Envoyer un Message">Send a Message</h3>
+            <form class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" data-en="Name" data-fr="Nom">Name</label>
+                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" data-placeholder-en="Your name" data-placeholder-fr="Votre nom" placeholder="Your name">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" data-en="Email" data-fr="Email">Email</label>
+                <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" data-placeholder-en="your.email@example.com" data-placeholder-fr="votre.email@exemple.com" placeholder="your.email@example.com">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" data-en="Message" data-fr="Message">Message</label>
+                <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" data-placeholder-en="Tell me about your project..." data-placeholder-fr="Parlez-moi de votre projet..." placeholder="Tell me about your project..."></textarea>
+              </div>
+              <button type="submit" class="btn-3d w-full bg-gradient-to-r from-blue-600 to-orange-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg" data-en="Send Message" data-fr="Envoyer le Message">
+                <span>Send Message</span>
+              </button>
+            </form>
+          </div>
+        </div>
 
-          education_title: "Education",
-          edu1_title: "BSc Software Engineering",
-          edu2_title: "Spanish Language",
-          edu3_title: "Chinese Language",
-          edu4_title: "Engineering",
-          edu5_title: "Physics-Chemistry Baccalaureate",
+        <div class="section-enter">
+          <div class="card-3d bg-white p-8 rounded-xl shadow-lg border border-gray-100 h-full">
+            <h3 class="text-xl font-bold mb-6 text-gray-800" data-en="CV Preview" data-fr="Aperçu du CV">CV Preview</h3>
+            <div class="space-y-4 text-sm">
+              <div>
+                <h4 class="font-semibold text-gray-800 mb-2" data-en="Education" data-fr="Formation">Education</h4>
+                <p class="text-gray-600" data-en="BSc Software Engineering - Eastern Mediterranean University (2021-2025)" data-fr="Licence en Ingénierie Logicielle - Université Méditerranéenne Orientale (2021-2025)">BSc Software Engineering - Eastern Mediterranean University (2021-2025)</p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-800 mb-2" data-en="Recent Experience" data-fr="Expérience Récente">Recent Experience</h4>
+                <p class="text-gray-600" data-en="Omnishore Med Tech (2024) - SQL Server integration, ETL, data management" data-fr="Omnishore Med Tech (2024) - Intégration SQL Server, ETL, gestion de données">Omnishore Med Tech (2024) - SQL Server integration, ETL, data management</p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-800 mb-2" data-en="Key Skills" data-fr="Compétences Clés">Key Skills</h4>
+                <p class="text-gray-600" data-en="Python, JavaScript, PHP, MySQL, Oracle, Git, Leadership" data-fr="Python, JavaScript, PHP, MySQL, Oracle, Git, Leadership">Python, JavaScript, PHP, MySQL, Oracle, Git, Leadership</p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-800 mb-2" data-en="Languages" data-fr="Langues">Languages</h4>
+                <p class="text-gray-600" data-en="Arabic, French, English (Fluent) | Chinese, Spanish (Elementary)" data-fr="Arabe, Français, Anglais (Courant) | Chinois, Espagnol (Élémentaire)">Arabic, French, English (Fluent) | Chinese, Spanish (Elementary)</p>
+              </div>
+            </div>
+            <button class="btn-3d w-full mt-6 bg-gradient-to-r from-blue-600 to-orange-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg" data-en="Download Full CV (PDF)" data-fr="Télécharger CV Complet (PDF)">
+              <i class="fas fa-download mr-2"></i><span>Download Full CV (PDF)</span>
+            </button>
+          </div>
+        </div>
 
-          certs_title: "Certificates & Awards",
-          cert1: "TOEIC C1",
-          cert2: "TCF B2",
-          cert3: "Web Development Certificates",
-          award1: "President, Moroccan Society",
-          award2: "Vice President, Moroccan Society",
-          award3: "1st Place – 400m Race",
+      </div>
+    </div>
+  </section>
 
-          contact_title: "Let's Work Together",
-          contact_desc: "Ready to bring your ideas to life? Let's connect and create something amazing.",
-          send_email: "Send Email",
-          call_now: "Call Now",
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">Mohamed Nouaim El Aakil</h3>
+          <p class="text-gray-400" data-en="Software Engineer passionate about creating innovative solutions and leading successful projects." data-fr="Ingénieur logiciel passionné par la création de solutions innovantes et la direction de projets réussis.">Software Engineer passionate about creating innovative solutions and leading successful projects.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4" data-en="Quick Links" data-fr="Liens Rapides">Quick Links</h4>
+          <div class="space-y-2">
+            <a href="#home" class="block text-gray-400 hover:text-white transition-colors" data-en="Home" data-fr="Accueil">Home</a>
+            <a href="#projects" class="block text-gray-400 hover:text-white transition-colors" data-en="Projects" data-fr="Projets">Projects</a>
+            <a href="#contact" class="block text-gray-400 hover:text-white transition-colors" data-en="Contact" data-fr="Contact">Contact</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4" data-en="Connect" data-fr="Se Connecter">Connect</h4>
+          <div class="flex space-x-4">
+            <a href="https://github.com/NOUAIM98" class="w-10 h-10 bg-gradient-to-r from-blue-600 to-orange-500 rounded-lg flex items-center justify-center hover:shadow-lg transition-all">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-gradient-to-r from-blue-600 to-orange-500 rounded-lg flex items-center justify-center hover:shadow-lg transition-all">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2024 Mohamed Nouaim El Aakil. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
-          footer_role: "Software Engineering",
-          rights: "© 2024 Mohamed Nouaim El Aakil. All rights reserved."
-        },
-
-        fr: {
-          title: "Mohamed Nouaim El Aakil - Portfolio 3D",
-          nav_name: "Mohamed Nouaim",
-          nav_home: "Accueil",
-          nav_about: "À propos",
-          nav_skills: "Compétences",
-          nav_projects: "Projets",
-          nav_experience: "Expérience",
-          nav_contact: "Contact",
-
-          hero_title: "Mohamed Nouaim<br>El Aakil",
-          hero_subtitle: "Génie logiciel",
-          hero_text: "Ingénieur logiciel motivé et dévoué, doté de solides compétences en programmation, en résolution de problèmes et en travail d’équipe. Expérience acquise grâce à des stages et des projets pratiques.",
-          btn_contact: "Me contacter",
-          btn_projects: "Voir les projets",
-
-          about_title: "À propos de moi",
-          contact_info_title: "Informations de contact",
-          phone_label: "Téléphone",
-          phone_value: "+21259916501",
-          email_label: "E‑mail",
-          email_value: "mn.elaakil@gmail.com",
-          location_label: "Localisation",
-          location_value: "Casablanca, Maroc",
-          connect_title: "Réseaux & liens",
-          github_label: "GitHub",
-          github_value: "github.com/NOUAIM98",
-          linkedin_label: "LinkedIn",
-          linkedin_value: "Mohamed Nouaim Elaakil",
-
-          skills_title: "Compétences & Technologies",
-          prog_title: "Langages de programmation",
-          webdev_title: "Développement Web",
-          db_title: "Bases de données",
-          tools_title: "Outils & Systèmes",
-          version_title: "Gestion de versions",
-          lang_title: "Langues",
-          lang_list1: "Arabe, Français, Anglais",
-          lang_list2: "Chinois, Espagnol",
-          fluent: "Courant",
-          elementary: "Notions",
-
-          projects_title: "Projets à la une",
-          p1_title: "BizLinker – Plateforme Web & Mobile",
-          p1_desc: "Plateforme de réseautage professionnel reliant entrepreneurs et spécialistes.",
-          p1_role: "Développeur back‑end, Chef d’équipe",
-
-          p2_title: "Application sociale pour seniors",
-          p2_desc: "Réseau social conçu pour les personnes âgées afin d’échanger et de garder le lien.",
-          p2_role: "Développeur back‑end & base de données",
-
-          p3_title: "Portail de recherche immobilière",
-          p3_desc: "Plateforme complète pour rechercher, filtrer et gérer des annonces immobilières.",
-          p3_role: "Chef de projet, Concepteur de systèmes",
-
-          p4_title: "Appli localisateur de banques de sang (Android)",
-          p4_desc: "Application mobile pour trouver les banques de sang à proximité et gérer les dons.",
-          p4_role: "Designer UI, Chef d’équipe",
-
-          experience_title: "Expériences professionnelles",
-          exp1_role: "Intégration SQL Server, ETL, Gestion des données",
-          exp1_desc: "Spécialisé en intégration de bases de données et processus ETL pour la santé.",
-          exp2_role: "Cybersécurité, Gestion des risques",
-          exp2_desc: "Mise en place de protocoles de sécurité et évaluation des risques des SI.",
-          exp3_company: "Entraîneur – Kingan FC, Chine",
-          exp3_role: "Entraîneur de football (U12)",
-          exp3_desc: "Encadrement d’équipes jeunes, développement du leadership et de la communication.",
-          exp4_role: "Construction résidentielle",
-          exp4_desc: "Expérience terrain en gestion de projets et en développement résidentiel.",
-          exp5_role: "Conception électrique AutoCAD",
-          exp5_desc: "Plans techniques et conception de systèmes électriques avec AutoCAD.",
-
-          education_title: "Formation",
-          edu1_title: "Licence en génie logiciel",
-          edu2_title: "Langue espagnole",
-          edu3_title: "Langue chinoise",
-          edu4_title: "Ingénierie",
-          edu5_title: "Baccalauréat Physique‑Chimie",
-
-          certs_title: "Certificats & Distinctions",
-          cert1: "TOEIC C1",
-          cert2: "TCF B2",
-          cert3: "Certificats de développement Web",
-          award1: "Président, Moroccan Society",
-          award2: "Vice‑président, Moroccan Society",
-          award3: "1re place – course de 400 m",
-
-          contact_title: "Travaillons ensemble",
-          contact_desc: "Prêt à donner vie à vos idées ? Discutons et créons quelque chose d’exceptionnel.",
-          send_email: "Envoyer un e‑mail",
-          call_now: "Appeler maintenant",
-
-          footer_role: "Génie logiciel",
-          rights: "© 2024 Mohamed Nouaim El Aakil. Tous droits réservés."
-        }
-      };
-
-      function setLanguage(lang) {
-        try {
-          document.documentElement.setAttribute('lang', lang);
-          document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            const val = translations[lang] && translations[lang][key];
-            if (typeof val === 'undefined') return;
-
-            if (el.tagName === 'TITLE') {
-              // Strip tags for document.title safety
-              const plain = val.replace(/<[^>]*>/g, '');
-              document.title = plain;
-              el.textContent = plain;
-            } else {
-              el.innerHTML = val;
-            }
-          });
-          localStorage.setItem('lang', lang);
-        } catch (e) {
-          console.error('Language switch error:', e);
-        }
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const saved = localStorage.getItem('lang') || 'en';
-        setLanguage(saved);
+  <script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
-    </script>
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, observerOptions);
+    document.querySelectorAll('.section-enter').forEach(el => observer.observe(el));
+
+    // Language switching
+    let currentLang = 'en';
+    function switchLanguage(lang) {
+      currentLang = lang;
+
+      // Toggle button styles
+      document.getElementById('lang-en').classList.toggle('bg-white', lang === 'en');
+      document.getElementById('lang-en').classList.toggle('text-blue-600', lang === 'en');
+      document.getElementById('lang-en').classList.toggle('shadow-sm', lang === 'en');
+      document.getElementById('lang-en').classList.toggle('text-gray-600', lang !== 'en');
+
+      document.getElementById('lang-fr').classList.toggle('bg-white', lang === 'fr');
+      document.getElementById('lang-fr').classList.toggle('text-blue-600', lang === 'fr');
+      document.getElementById('lang-fr').classList.toggle('shadow-sm', lang === 'fr');
+      document.getElementById('lang-fr').classList.toggle('text-gray-600', lang !== 'fr');
+
+      // Swap text content using data attributes
+      document.querySelectorAll('[data-en][data-fr]').forEach(el => {
+        const txt = el.getAttribute(`data-${lang}`);
+        if (!txt) return;
+        const span = el.querySelector('span');
+        if (span) span.textContent = txt; else el.textContent = txt;
+      });
+
+      // Swap placeholders
+      document.querySelectorAll('[data-placeholder-en][data-placeholder-fr]').forEach(el => {
+        const ph = el.getAttribute(`data-placeholder-${lang}`);
+        if (ph) el.placeholder = ph;
+      });
+    }
+    document.getElementById('lang-en').addEventListener('click', () => switchLanguage('en'));
+    document.getElementById('lang-fr').addEventListener('click', () => switchLanguage('fr'));
+
+    // CV open (uses your local file:// paths as requested)
+    const CV_LINKS = {
+      en: 'file:///C:/Users/mnela/Downloads/MYCV%20(1)%20(1)%20(1).pdf',
+      fr: 'file:///C:/Users/mnela/Downloads/MYCVFR.pdf'
+    };
+    function openCV() {
+      const url = currentLang === 'fr' ? CV_LINKS.fr : CV_LINKS.en;
+      window.open(url, '_blank'); // opens the PDF (reveals it)
+    }
+
+    // Button interactions
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', function () {
+        const text = this.textContent || this.querySelector('span')?.textContent || '';
+
+        if (text.includes('View Projects') || text.includes('Voir les Projets')) {
+          document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
+        } else if (text.includes('Get In Touch') || text.includes('Me Contacter')) {
+          document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+        } else if (text.includes('Download CV')) {
+          openCV();
+        } else if (text.includes('Télécharger CV')) {
+          openCV();
+        } else if (text.includes('Send Email') || text.includes('Envoyer Email')) {
+          window.location.href = 'mailto:mn.elaakil@gmail.com';
+        } else if (text.includes('Call Now') || text.includes('Appeler')) {
+          window.location.href = 'tel:+212659916501';
+        } else if (text.includes('GitHub')) {
+          // You can add per-project GitHub URLs similarly with data attributes if you want
+          window.open('https://github.com/NOUAIM98', '_blank');
+        } else if (text.includes('Live Demo')) {
+          // Open per-project demo URL from data attribute
+          const url = this.getAttribute('data-demo-url');
+          if (url) {
+            window.open(url, '_blank');
+          } else {
+            alert('No demo URL set yet. Add data-demo-url="https://your-demo-link" to the button.');
+          }
+        }
+      });
+    });
+
+    // Form submit toast
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const message = currentLang === 'en'
+        ? "Thank you for your message! I'll get back to you soon."
+        : "Merci pour votre message ! Je vous répondrai bientôt.";
+      alert(message);
+      this.reset();
+    });
+
+    // Active nav state on scroll
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('nav a[href^="#"]');
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= (sectionTop - 200)) current = section.getAttribute('id');
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('text-blue-600');
+        if (link.getAttribute('href') === `#${current}`) link.classList.add('text-blue-600');
+      });
+    });
+  </script>
+
+  <!-- (Cloudflare snippet left untouched as in your original) -->
+  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'977066d9f60be1af',t:'MTc1NjUxNjE1Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
-
-
-
