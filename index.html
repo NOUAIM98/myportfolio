@@ -84,8 +84,10 @@
       <div class="section-enter flex justify-center">
         <div class="profile-3d relative">
           <div class="w-80 h-80 bg-gradient-to-br from-blue-100 to-white rounded-full flex items-center justify-center floating">
-            <div class="w-72 h-72 bg-gradient-to-br from-blue-200 to-blue-50 rounded-full flex items-center justify-center">
-              <i class="fas fa-user text-8xl text-blue-600"></i>
+            <div class="w-72 h-72 bg-gradient-to-br from-blue-200 to-blue-50 rounded-full flex items-center justify-center overflow-hidden">
+              <!-- Your profile photo -->
+              <img src="assets/profile.jpg" alt="Mohamed Nouaim El Aakil"
+                   class="w-72 h-72 rounded-full object-cover border-4 border-white/60 shadow-lg">
             </div>
           </div>
           <div class="absolute -top-4 -right-4 w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white">
@@ -663,14 +665,14 @@
     document.getElementById('lang-en').addEventListener('click', () => switchLanguage('en'));
     document.getElementById('lang-fr').addEventListener('click', () => switchLanguage('fr'));
 
-    // CV open (uses your local file:// paths as requested)
+    // CV open (works on GitHub Pages via relative files in your repo)
     const CV_LINKS = {
-      en: 'file:///C:/Users/mnela/Downloads/MYCV%20(1).pdf',
-      fr: 'file:///C:/Users/mnela/Downloads/MYCVFR.pdf'
+      en: 'assets/cv/cv_eng.pdf',
+      fr: 'assets/cv/cv_fr.pdf'
     };
     function openCV() {
       const url = currentLang === 'fr' ? CV_LINKS.fr : CV_LINKS.en;
-      window.open(url, '_blank'); // opens the PDF (reveals it)
+      window.open(url, '_blank');
     }
 
     // Button interactions
@@ -682,9 +684,7 @@
           document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
         } else if (text.includes('Get In Touch') || text.includes('Me Contacter')) {
           document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
-        } else if (text.includes('Download CV')) {
-          openCV();
-        } else if (text.includes('Télécharger CV')) {
+        } else if (text.includes('Download CV') || text.includes('Télécharger CV')) {
           openCV();
         } else if (text.includes('Send Email') || text.includes('Envoyer Email')) {
           window.location.href = 'mailto:mn.elaakil@gmail.com';
@@ -693,13 +693,8 @@
         } else if (text.includes('GitHub')) {
           window.open('https://github.com/NOUAIM98', '_blank');
         } else if (text.includes('Live Demo')) {
-          // Open per-project demo URL from data attribute
           const url = this.getAttribute('data-demo-url');
-          if (url) {
-            window.open(url, '_blank');
-          } else {
-            alert('No demo URL set yet. Add data-demo-url="https://your-demo-link" to the button.');
-          }
+          if (url) window.open(url, '_blank');
         }
       });
     });
