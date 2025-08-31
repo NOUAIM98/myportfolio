@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mohamed Nouaim El Aakil - Software Engineer</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -57,15 +57,12 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section id="home" class="min-h-screen flex items-center justify-center pt-20 px-4">
     <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
       <div class="section-enter">
         <h1 class="text-5xl md:text-7xl font-bold mb-4">
-          <span class="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
-            Mohamed Nouaim
-          </span>
-          <br>
+          <span class="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">Mohamed Nouaim</span><br/>
           <span class="text-gray-800">El Aakil</span>
         </h1>
         <h2 class="text-2xl md:text-3xl text-blue-600 font-semibold mb-6" data-en="Software Engineering" data-fr="Ingénierie Logicielle">Software Engineering</h2>
@@ -85,9 +82,7 @@
         <div class="profile-3d relative">
           <div class="w-80 h-80 bg-gradient-to-br from-blue-100 to-white rounded-full flex items-center justify-center floating">
             <div class="w-72 h-72 bg-gradient-to-br from-blue-200 to-blue-50 rounded-full flex items-center justify-center overflow-hidden">
-              <!-- Your profile photo -->
-              <img src="assets/profile.jpg" alt="Mohamed Nouaim El Aakil"
-                   class="w-72 h-72 rounded-full object-cover border-4 border-white/60 shadow-lg">
+              <img src="assets/profile.jpg" alt="Mohamed Nouaim El Aakil" class="w-72 h-72 rounded-full object-cover border-4 border-white/60 shadow-lg">
             </div>
           </div>
           <div class="absolute -top-4 -right-4 w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white">
@@ -101,7 +96,7 @@
     </div>
   </section>
 
-  <!-- About & Contact Section -->
+  <!-- About & Contact Info -->
   <section id="about" class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid md:grid-cols-2 gap-12">
@@ -153,7 +148,7 @@
     </div>
   </section>
 
-  <!-- Skills Section -->
+  <!-- Skills -->
   <section id="skills" class="py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16 section-enter">
@@ -222,7 +217,7 @@
     </div>
   </section>
 
-  <!-- Projects Section -->
+  <!-- Projects -->
   <section id="projects" class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16 section-enter">
@@ -339,7 +334,7 @@
     </div>
   </section>
 
-  <!-- Experience Section -->
+  <!-- Experience -->
   <section id="experience" class="py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16 section-enter">
@@ -509,7 +504,7 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Contact -->
   <section id="contact" class="py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16 section-enter">
@@ -530,18 +525,31 @@
 
           <div class="card-3d bg-white p-8 rounded-xl shadow-lg border border-gray-100">
             <h3 class="text-xl font-bold mb-6 text-gray-800" data-en="Send a Message" data-fr="Envoyer un Message">Send a Message</h3>
-            <form class="space-y-4">
+
+            <!-- FormSubmit: free, no backend -->
+            <form class="space-y-4" action="https://formsubmit.co/mn.elaakil@gmail.com" method="POST">
+              <!-- Anti-spam honey pot (invisible) -->
+              <input type="text" name="_honey" style="display:none">
+              <!-- Disable captcha -->
+              <input type="hidden" name="_captcha" value="false">
+              <!-- Email subject -->
+              <input type="hidden" name="_subject" value="New message from portfolio site">
+              <!-- Use a clean table template -->
+              <input type="hidden" name="_template" value="table">
+              <!-- Redirect back with success flag -->
+              <input type="hidden" name="_next" value="./?sent=1">
+
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2" data-en="Name" data-fr="Nom">Name</label>
-                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" data-placeholder-en="Your name" data-placeholder-fr="Votre nom" placeholder="Your name">
+                <input name="name" required type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" data-placeholder-en="Your name" data-placeholder-fr="Votre nom" placeholder="Your name">
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2" data-en="Email" data-fr="Email">Email</label>
-                <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" data-placeholder-en="your.email@example.com" data-placeholder-fr="votre.email@exemple.com" placeholder="your.email@example.com">
+                <input name="email" required type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" data-placeholder-en="your.email@example.com" data-placeholder-fr="votre.email@exemple.com" placeholder="your.email@example.com">
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2" data-en="Message" data-fr="Message">Message</label>
-                <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" data-placeholder-en="Tell me about your project..." data-placeholder-fr="Parlez-moi de votre projet..." placeholder="Tell me about your project..."></textarea>
+                <textarea name="message" required rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" data-placeholder-en="Tell me about your project..." data-placeholder-fr="Parlez-moi de votre projet..." placeholder="Tell me about your project..."></textarea>
               </div>
               <button type="submit" class="btn-3d w-full bg-gradient-to-r from-blue-600 to-orange-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg" data-en="Send Message" data-fr="Envoyer le Message">
                 <span>Send Message</span>
@@ -625,7 +633,7 @@
       });
     });
 
-    // Intersection Observer for animations
+    // Intersection Observer for enter animations
     const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
@@ -665,9 +673,9 @@
     document.getElementById('lang-en').addEventListener('click', () => switchLanguage('en'));
     document.getElementById('lang-fr').addEventListener('click', () => switchLanguage('fr'));
 
-    // CV open (works on GitHub Pages via relative files in your repo)
+    // CV links (GitHub Pages-friendly, relative to repo root)
     const CV_LINKS = {
-      en: 'assets/cv/cv_eng (2).pdf',
+      en: 'assets/cv/cv_eng.pdf',
       fr: 'assets/cv/cv_fr.pdf'
     };
     function openCV() {
@@ -675,10 +683,10 @@
       window.open(url, '_blank');
     }
 
-    // Button interactions
+    // Button interactions (no blocking form submits)
     document.querySelectorAll('button').forEach(button => {
       button.addEventListener('click', function () {
-        const text = this.textContent || this.querySelector('span')?.textContent || '';
+        const text = (this.textContent || this.querySelector('span')?.textContent || '').trim();
 
         if (text.includes('View Projects') || text.includes('Voir les Projets')) {
           document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
@@ -699,15 +707,23 @@
       });
     });
 
-    // Form submit toast
-    document.querySelector('form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const message = currentLang === 'en'
-        ? "Thank you for your message! I'll get back to you soon."
-        : "Merci pour votre message ! Je vous répondrai bientôt.";
-      alert(message);
-      this.reset();
-    });
+    // Show success toast if redirected after form submit (?sent=1)
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('sent') === '1') {
+        const msg = currentLang === 'fr'
+          ? "Merci pour votre message ! Je vous répondrai bientôt."
+          : "Thank you for your message! I'll get back to you soon.";
+        // Simple toast
+        const toast = document.createElement('div');
+        toast.textContent = msg;
+        toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-3 rounded-lg shadow-lg';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 4500);
+        // Clean the URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    })();
 
     // Active nav state on scroll
     window.addEventListener('scroll', () => {
@@ -725,8 +741,7 @@
     });
   </script>
 
-  <!-- (Cloudflare snippet left untouched as in your original) -->
+  <!-- (Cloudflare snippet left untouched) -->
   <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'977066d9f60be1af',t:'MTc1NjUxNjE1Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
-
